@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="WARN">
+    
+    <!-- 定義 Pattern 格式 -->
+    <Properties>
+        <Property name="LOG_PATTERN">[%d{yyyy-MM-dd HH:mm:ss}] [%-5p] [%c{1}:%L] - %m%n</Property>
+        <Property name="LOG_FILE">logs/app.log</Property>
+    </Properties>
+
+    <!-- Appenders -->
+    <Appenders>
+        <!-- Console: 開發用，輸出 INFO 以上 -->
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout pattern="${LOG_PATTERN}"/>
+        </Console>
+
+        <!-- File: 正式用，只寫 ERROR 以上 -->
+        <RollingFile name="FileAppender"
+                    fileName="${LOG_FILE}"
+                    filePattern="logs/app-%d{yyyy-MM-dd}.log.gz">
+            <PatternLayout pattern="${LOG_PATTERN}" />
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+            <Filters>
+                <ThresholdFilter level="warn" onMatch="ACCEPT" onMismatch="DENY" />
+            </Filters>
+        </RollingFile>
+    </Appenders>
+
+    <!-- Loggers -->
+    <Loggers>
+        <!-- Controller 層: INFO -->
+        <Logger name="com.supernovapos.finalproject..controller" level="info" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <!-- Service 層: DEBUG (開發), INFO (正式) -->
+        <Logger name="com.supernovapos.finalproject..service" level="debug" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <!-- Repository 層: TRACE (開發), WARN (正式) -->
+        <Logger name="com.supernovapos.finalproject..repository" level="trace" additivity="false">
+            <AppenderRef ref="Console"/>
+        </Logger>
+
+        <!-- 其他 Spring Boot 預設 logger -->
+        <Root level="info">
+            <AppenderRef ref="Console"/>
+            <AppenderRef ref="FileAppender"/>
+        </Root>
+    </Loggers>
+</Configuration>

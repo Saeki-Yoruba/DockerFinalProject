@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>訂單確認</title>
+    <style>
+        body { font-family: Arial, sans-serif; }
+        .container { max-width: 600px; margin: 0 auto; }
+        .header { background: #007bff; color: white; padding: 20px; }
+        .content { padding: 20px; }
+        .item { border-bottom: 1px solid #eee; padding: 10px 0; }
+        .total { font-weight: bold; font-size: 18px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1 th:text="${appName}">SuperNova POS</h1>
+            <p>訂單確認通知</p>
+        </div>
+        <div class="content">
+            <p th:text="'親愛的 ' + ${order.memberName} + ' 您好'">親愛的會員您好</p>
+            
+            <h3>訂單資訊</h3>
+            <p>訂單編號：<span th:text="${order.merchantTradeNo}"></span></p>
+            <p>訂購時間：<span th:text="${order.formattedOrderDate}"></span></p>
+            
+            <h3>訂購項目</h3>
+            <div th:each="item : ${order.items}" class="item">
+                <span th:text="${item.productName}"></span> x 
+                <span th:text="${item.quantity}"></span> = 
+                <span th:text="${item.formattedSubtotal}"></span>
+            </div>
+            
+            <div class="total">
+                <p>實付金額：<span th:text="${order.formattedFinalAmount}"></span></p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
