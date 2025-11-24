@@ -13,7 +13,7 @@ SupernovaPOS 是一套以 **Spring Boot 3.x + Vue 3 + MS SQL Server + Docker** �
 * 會員註冊登入（Email 驗證、重寄驗證信）
 * Google / LINE OAuth2 第三方登入綁定
 * RBAC 權限架構：User / Role / Permission / PermissionCategory
-* JWT 登入/刷新/登出流程
+* JWT 登入/登出流程
 * Dashboard 報表（每日營收、會員消費、熱門品項、集團訂單統計）
 * Docker、後端環境設定、CI/CD 基礎
 
